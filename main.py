@@ -27,7 +27,7 @@ plt.title("This is a title")
 plt.xlabel("x axis")
 plt.ylabel("y axis")
 for i in range(N):
-	plt.scatter(X[y == i][:, 0],X[y == i][:, 1], c=colors[i], alpha=0.3)
+	plt.scatter(X[y == i][:, 0],X[y == i][:, 1], c=colors[i], alpha=0.8)
 plt.show()
 
 """
