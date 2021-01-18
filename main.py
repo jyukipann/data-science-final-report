@@ -2,6 +2,7 @@ from sklearn.datasets import make_blobs
 from sklearn.model_selection import train_test_split
 from sklearn.datasets import fetch_openml
 from sklearn.svm import SVC
+from sklearn.neural_network import MLPClassifier
 import matplotlib.pyplot as plt
 import random
 
