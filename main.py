@@ -5,6 +5,8 @@ from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
 import matplotlib.pyplot as plt
 import random
+import numpy as np
+from matplotlib.colors import ListedColormap
 
 #class
 N = 4
@@ -12,8 +14,6 @@ N = 4
 #task1
 X, y = make_blobs(random_state=122, n_samples=450, n_features=2, cluster_std=1.8, centers=N)
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
-print(type(X),X.shape)
-print(type(y),y.shape)
 
 
 colors = ["deeppink", "lawngreen", "blue", "salmon"]
@@ -28,16 +28,26 @@ plt.xlabel("x axis")
 plt.ylabel("y axis")
 for i in range(N):
 	plt.scatter(X[y == i][:, 0],X[y == i][:, 1], c=colors[i], alpha=0.8)
-plt.show()
 
-"""
-svm = SVC(C=4, gamma="auto")
-svm.fit(X_train, y_train)
-"""
-estimator = MLPClassifier()
+
+if True:
+	estimator = SVC(C=4, gamma="auto")
+else:
+	estimator = MLPClassifier()
+
 estimator.fit(X_train, y_train)
 
-
+x_min, x_max = X[:, 0].min()-1, X[:, 0].max()+1
+y_min, y_max = X[:, 1].min()-1, X[:, 1].max()+1
+resolution = 0.5
+x_mesh, y_mesh = np.meshgrid(np.arange(x_min, x_max, resolution),np.arange(y_min, y_max, resolution))
+z = estimator.predict(np.array([x_mesh.ravel(), y_mesh.ravel()]).T)
+z = z.reshape(x_mesh.shape)
+cmap = ListedColormap(tuple(colors))
+plt.contourf(x_mesh, y_mesh, z, alpha=0.4, cmap=cmap)
+plt.xlim(x_mesh.min(), x_mesh.max())
+plt.ylim(y_mesh.min(), y_mesh.max())
+plt.show()
 """
 #task2
 X_org, y_org = fetch_openml('mnist_784', version=1, return_X_y=True, as_frame=False) 
