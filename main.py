@@ -1,19 +1,10 @@
-from sklearn.datasets import make_blobs
-from sklearn.model_selection import train_test_split
-
-from sklearn.svm import SVC
-from sklearn.neural_network import MLPClassifier
 import matplotlib.pyplot as plt
-import random
 import numpy as np
-from matplotlib.colors import ListedColormap
-
-
-
 
 def gene_colors(N=5):
 	from matplotlib import colors as mcolors
 	colors = dict(mcolors.BASE_COLORS, **mcolors.CSS4_COLORS).keys()
+	import random
 	colors = random.sample(colors, N)
 	return colors
 
@@ -28,7 +19,9 @@ def task1():
 	#class
 	N = 4
 
+	from sklearn.datasets import make_blobs
 	X, y = make_blobs(random_state=122, n_samples=450, n_features=2, cluster_std=1.8, centers=N)
+	from sklearn.model_selection import train_test_split
 	X_train, _, y_train, _ = train_test_split(X, y, random_state=1)
 
 	colors = ["deeppink", "lawngreen", "blue", "salmon"]
@@ -44,8 +37,10 @@ def task1():
 
 
 	if True:
+		from sklearn.svm import SVC
 		estimator = SVC(C=4, gamma="auto")
 	else:
+		from sklearn.neural_network import MLPClassifier
 		estimator = MLPClassifier()
 
 	estimator.fit(X_train, y_train)
@@ -57,6 +52,7 @@ def task1():
 	x_mesh, y_mesh = np.meshgrid(np.arange(x_min, x_max, resolution),np.arange(y_min, y_max, resolution))
 	z = estimator.predict(np.array([x_mesh.ravel(), y_mesh.ravel()]).T)
 	z = z.reshape(x_mesh.shape)
+	from matplotlib.colors import ListedColormap
 	cmap = ListedColormap(tuple(colors))
 	plt.contourf(x_mesh, y_mesh, z, alpha=0.4, cmap=cmap)
 	plt.xlim(x_mesh.min(), x_mesh.max())
@@ -90,6 +86,14 @@ def task2():
 	plt.legend(loc='upper left')
 	plt.show()
 
+#task3
+"""
+３．深層学習
+Fashion-MNIST に対して，深層学習による分類をおこなえ．使用したネットワークの構成について説
+明せよ．学習データに対する損失関数の値と正解率の推移，テストデータに対する正解率と混同行列を
+しめし，結果を考察せよ．なお pytorch では，第１４回に配布したプログラムにおいて，datasets.MNIST
+を datasets.FashionMNIST にするだけで利用可能になる．
+"""
 def task3():
 	pass
 
@@ -116,9 +120,5 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
 from sklearn.datasets import fetch_openml
 X_org, y_org = fetch_openml('mnist_784', version=1, return_X_y=True, as_frame=False) 
 
-３．深層学習
-Fashion-MNIST に対して，深層学習による分類をおこなえ．使用したネットワークの構成について説
-明せよ．学習データに対する損失関数の値と正解率の推移，テストデータに対する正解率と混同行列を
-しめし，結果を考察せよ．なお pytorch では，第１４回に配布したプログラムにおいて，datasets.MNIST
-を datasets.FashionMNIST にするだけで利用可能になる．
+
 """
