@@ -95,8 +95,10 @@ Fashion-MNIST に対して，深層学習による分類をおこなえ．使用
 を datasets.FashionMNIST にするだけで利用可能になる．
 """
 def task3():
-	pass
-
+	import classification_train
+	import classification_test
+	classification_train.classification_train()
+	classification_test.classification_test()
 
 if __name__ == "__main__":
 	task = [task1,task2,task3]
@@ -107,18 +109,3 @@ if __name__ == "__main__":
 		except:
 			exit(0)
 		t()
-
-
-"""
-
-from sklearn.datasets import make_blobs
-from sklearn.model_selection import train_test_split
-X, y = make_blobs(random_state=122, n_samples=450, n_features=2, cluster_std=1.8, centers=4)
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
-
-
-from sklearn.datasets import fetch_openml
-X_org, y_org = fetch_openml('mnist_784', version=1, return_X_y=True, as_frame=False) 
-
-
-"""
