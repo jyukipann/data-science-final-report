@@ -19,7 +19,7 @@ def classification_test():
 	testdataset = datasets.FashionMNIST('./data', transform=img_transform, train=False,download= False)  # 一度端末に保存したらdownloadはFalseにしておきましょう
 	testloader = DataLoader(testdataset, batch_size=100, shuffle=False)
 
-	net = models.reportCNN(10)
+	net = models.MyCNN(10)
 	net.load_state_dict(torch.load('./save_models/fashion_mnist_classification.pth'))
 	net.to(device)
 	net.eval()
@@ -47,3 +47,6 @@ def classification_test():
 
 	c_mat= confusion_matrix(target_all, result_all)
 	print(c_mat)
+
+if __name__ == "__main__":
+	classification_test()

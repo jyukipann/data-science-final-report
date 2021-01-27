@@ -29,9 +29,9 @@ def task1():
 		colors = gene_colors(N=N)
 
 	plt.grid(True)
-	plt.title("This is a title")
-	plt.xlabel("x axis")
-	plt.ylabel("y axis")
+	plt.title("Class classification boundaries")
+	plt.xlabel("feature 1")
+	plt.ylabel("feature 2")
 	for i in range(N):
 		plt.scatter(X[y == i][:, 0],X[y == i][:, 1], c=colors[i], alpha=0.8)
 
@@ -44,7 +44,7 @@ def task1():
 		estimator = MLPClassifier()
 
 	estimator.fit(X_train, y_train)
-	print(estimator.score(X_train,y_train))
+	print("socre :",estimator.score(X_train,y_train))
 
 	x_min, x_max = X[:, 0].min()-1, X[:, 0].max()+1
 	y_min, y_max = X[:, 1].min()-1, X[:, 1].max()+1
@@ -79,8 +79,12 @@ def task2():
 	from sklearn.manifold import TSNE
 	X = TSNE(n_components=2).fit_transform(X)
 
-	colors = gene_colors(N=10)
+	colors = ["deeppink", "crimson", "purple", "violet", "indigo", 
+	"royalblue", "tomato", "firebrick", "chartreuse", "olive"]
 	plt.clf()
+	plt.title("Results of dimensionality reduction")
+	plt.xlabel("feature 1")
+	plt.ylabel("feature 2")
 	for i in range(10):
 		plt.scatter(X[y == str(i)][:, 0],X[y == str(i)][:, 1], c=colors[i], alpha=0.8, label=str(i))
 	plt.legend(loc='upper left')

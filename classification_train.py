@@ -20,7 +20,7 @@ def classification_train():
 	traindataset = datasets.FashionMNIST('./data', transform=img_transform, train=True,download=False)  # 一度端末に保存したらdownloadはFalseにしておきましょう
 	trainloader = DataLoader(traindataset, batch_size=100, shuffle=True)
 
-	net = models.reportCNN(10)
+	net = models.MyCNN(10)
 	net.to(device)
 
 	optimizer = torch.optim.Adam(net.parameters(), lr=1e-2)
@@ -28,9 +28,11 @@ def classification_train():
 
 	print(net)
 
-	num_epoch = 5
+	num_epoch = 10
 	since = time.time()
 
+	_loss = []
+	_acc = []
 	for epoch in range(num_epoch):
 		running_loss = 0.0
 		running_acc = 0.0
@@ -57,13 +59,36 @@ def classification_train():
 
 		running_acc /= total
 		print('Loss: ',running_loss, 'ACC :', running_acc, epoch)
+		_acc.append(running_acc)
+		_loss.append(running_loss)
 
 	print('Finished Training')
 
 	time_elapsed = time.time() - since
 	print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
 
+	import numpy as np
+	import matplotlib.pyplot as plt
+ 
+	X = np.array(list(range(len(_acc))))
+	acc = np.array(_acc)
+	loss = np.array(_loss)
+	plt.plot(X, acc)
+	plt.title("Transition of Accuracy")
+	plt.xlabel("epoch")
+	plt.ylabel("Accuracy")
+	plt.show()
+	plt.clf()
+	plt.plot(X, loss)
+	plt.title("Transition of Loss")
+	plt.xlabel("epoch")
+	plt.ylabel("Loss")
+	plt.show()
+
 	if not os.path.exists('./save_models'):
 		os.makedirs('./save_models')
 
 	torch.save(net.state_dict(), './save_models/fashion_mnist_classification.pth')
+
+if __name__ == "__main__":
+	classification_train()
