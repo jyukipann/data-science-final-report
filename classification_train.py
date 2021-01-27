@@ -17,7 +17,7 @@ def classification_train():
 		transforms.ToTensor()
 	])
 
-	traindataset = datasets.FashionMNIST('./data', transform=img_transform, train=True,download= True)  # 一度端末に保存したらdownloadはFalseにしておきましょう
+	traindataset = datasets.FashionMNIST('./data', transform=img_transform, train=True,download=False)  # 一度端末に保存したらdownloadはFalseにしておきましょう
 	trainloader = DataLoader(traindataset, batch_size=100, shuffle=True)
 
 	net = models.reportCNN(10)
