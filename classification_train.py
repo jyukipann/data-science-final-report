@@ -28,7 +28,7 @@ def classification_train():
 
 	print(net)
 
-	num_epoch = 10
+	num_epoch = 100
 	since = time.time()
 
 	_loss = []

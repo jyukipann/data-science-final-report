@@ -45,7 +45,9 @@ def task1():
 
 	estimator.fit(X_train, y_train)
 	print("socre :",estimator.score(X_train,y_train))
-
+	from sklearn.metrics import confusion_matrix
+	cm = confusion_matrix(y_train, estimator.predict(X_train))
+	print(cm)
 	x_min, x_max = X[:, 0].min()-1, X[:, 0].max()+1
 	y_min, y_max = X[:, 1].min()-1, X[:, 1].max()+1
 	resolution = 0.5
@@ -77,7 +79,7 @@ def task2():
 	print(c)
 
 	from sklearn.manifold import TSNE
-	X = TSNE(n_components=2).fit_transform(X)
+	X = TSNE(n_components=2,perplexity=4).fit_transform(X)
 
 	colors = ["deeppink", "crimson", "purple", "violet", "indigo", 
 	"royalblue", "tomato", "firebrick", "chartreuse", "olive"]
